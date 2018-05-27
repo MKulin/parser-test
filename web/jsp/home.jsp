@@ -36,11 +36,11 @@
             <td>Имя ссылки</td>
             <td>Адрес ссылки</td>
         </tr>
-        <c:forEach items="${requestScope.list}" var="href">
+        <c:forEach items="${requestScope.list}" var="tr">
             <tr>
-                <td></td>
-                <td></td>
-                <td>${href}</td>
+                <td>${tr.number}</td>
+                <td>${tr.name}</td>
+                <td><a href="#">${tr.href}</a></td>
             </tr>
         </c:forEach>
         <tr>

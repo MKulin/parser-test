@@ -1,6 +1,7 @@
 package web;
 
 import model.Parser;
+import model.TableRow;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,8 +18,7 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         URL url = new URL(req.getParameter("url"));
-        List<String> list = Parser.read(url);
-        list.forEach(System.out::println);
+        List<TableRow> list = Parser.read(url);
         req.setAttribute("list", list);
         RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/home.jsp");
         dispatcher.forward(req, resp);

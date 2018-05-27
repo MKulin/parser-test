@@ -12,16 +12,20 @@ public class Parser {
 
     private static Pattern pattern = Pattern.compile("\\s*(?i)href\\s*=\\s*(\"http+s?([^\"]*\")|'[^']*'|([^'\">\\s]+))");
 
-    private static List<String> hrefs(String page){
+    private static List<TableRow> hrefs(String page){
         Matcher m = pattern.matcher(page);
-        List<String> result = new ArrayList<>();
+        List<TableRow> result = new ArrayList<>();
+        int count = 1;
         while (m.find()){
-            result.add(m.group());
+            String href = m.group();
+            TableRow tr = new TableRow(count, "name", href.substring(href.indexOf('"') + 1, href.lastIndexOf('"')));
+            result.add(tr);
+            count++;
         }
         return result;
     }
 
-    public static List<String> read(URL url){
+    public static List<TableRow> read(URL url){
         String s = null;
         try {
             InputStream in = url.openStream();
