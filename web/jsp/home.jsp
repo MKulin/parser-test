@@ -11,7 +11,6 @@
             document.getElementById("waiting").removeAttribute("hidden");
         }
     </script>
-
     <table border="1" width="90%" align="center">
         <tr>
             <td align="center">
@@ -21,6 +20,9 @@
         <tr>
             <td class="label" align="center">
                 <form id="analyzing" action="home" method="get">
+                    <% String s = (String)request.getAttribute("exception");
+                    if (s == null) s = "";%>
+                    <label for="inputField" style="color: red"><%=s%></label><br>
                     <input id="inputField" type="text" name="url" size="100%">
                     <br><input type="submit" value="Анализировать" onclick="waiting()">
                 </form>
@@ -60,7 +62,11 @@
         </c:forEach>
         <tr>
             <td></td>
-            <td align="center"><input type="reset" value="Очистить"></td>
+            <td align="center">
+                <form method="get" action="home">
+                    <input type="submit" value="Очистить">
+                </form>
+            </td>
         </tr>
     </table>
 
