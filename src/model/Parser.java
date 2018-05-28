@@ -1,5 +1,9 @@
 package model;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -10,7 +14,7 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
-    private static Pattern pattern = Pattern.compile("\\s*(?i)href\\s*=\\s*(\"http+s?([^\"]*\")|'[^']*'|([^'\">\\s]+))");
+    /*private static Pattern pattern = Pattern.compile("\\s*(?i)href\\s*=\\s*(\"http+s?([^\"]*\")|'[^']*'|([^'\">\\s]+))");
 
     private static List<TableRow> hrefs(String page){
         Matcher m = pattern.matcher(page);
@@ -39,5 +43,22 @@ public class Parser {
             e.printStackTrace();
         }
         return hrefs(s);
+    }*/
+
+    public static List<TableRow> read (String url){
+        List<TableRow> result = new ArrayList<>();
+        try {
+            Document doc = Jsoup.connect(url).get();
+            int count = 1;
+            for(Element el : doc.getElementsByTag("a"))
+            {
+                TableRow tr = new TableRow(count, el.text(), el.attr("href"));
+                result.add(tr);
+                count++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
